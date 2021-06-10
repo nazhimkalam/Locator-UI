@@ -41,7 +41,7 @@ function App() {
 			</p>
 			<p className="mt-4 ">
 				The reason for this application build is to locate from which country and service providers are calls
-				from unknown numbers come from, moreover this can be enhanced in the future to make sure of GPS from the
+				from unknown numbers come from, moreover this can be enhanced in the future to make use of GPS from the
 				mobile to track the exact location of the device so this can be used for tracking lost family members or
 				locating lost devices.
 			</p>
@@ -70,13 +70,21 @@ function App() {
 
 				{result !== null && loading === false ? (
 					<div className="mt-5 mb-5">
-						<p className="text-muted">Google Maps are used in developer mode</p>
-						<p className="text-muted">Please select 'OK' for the Google maps alert</p>
-						<h4 className="mt-5">Details</h4>
-						<p className="text-muted">Service Provider: {result?.service_provider}</p>
-						<p className="text-muted">Country: {result?.country}</p>
-						<p className="text-muted">{result?.more_info}</p>
-						<LocatorMap latitude={parseFloat(result?.lat)} longitude={parseFloat(result?.lng)} />
+						{result?.lat == null || result.lng == null ? (
+							<>
+								<p className="mt-4">API request Quote had exceeded</p>
+							</>
+						) : (
+							<>
+								<p className="text-muted">Google Maps are used in developer mode</p>
+								<p className="text-muted">Please select 'OK' for the Google maps alert</p>
+								<h4 className="mt-5">Details</h4>
+								<p className="text-muted">Service Provider: {result?.service_provider}</p>
+								<p className="text-muted">Country: {result?.country}</p>
+								<p className="text-muted">{result?.more_info}</p>
+								<LocatorMap latitude={parseFloat(result?.lat)} longitude={parseFloat(result?.lng)} />
+							</>
+						)}
 					</div>
 				) : number === null || number === '' || loading === false ? (
 					<p className="mt-4">Enter a mobile number and click locate...</p>
